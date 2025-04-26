@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.database import database, usuarios
+from app.database import database, usuarios, event
 from contextlib import asynccontextmanager
+import logging
 
 # ----------- LIFESPAN -----------
 @asynccontextmanager
@@ -11,7 +12,6 @@ async def lifespan(app: FastAPI):
     await database.disconnect()
 
 app = FastAPI(title="Mi API", description="API con 10 endpoints y Swagger", lifespan=lifespan)
-
 # ----------- ENDPOINTS VARIOS -----------
 
 @app.get("/")
