@@ -2,15 +2,19 @@ from databases import Database
 import sqlalchemy
 from sqlalchemy import MetaData
 
-# URL de conexión a PostgreSQL
-DATABASE_URL = "postgresql://devopsdb:devopsdb@localhost:5432/devopsdb"
+# URL de conexión a SQLite (base en archivo local)
+DATABASE_URL = "sqlite:///./test.db"  # Archivo test.db en el mismo directorio
 
 # Objeto Database
 database = Database(DATABASE_URL)
 
 # Definición del metadata y engine
 metadata = MetaData()
-engine = sqlalchemy.create_engine(DATABASE_URL)
+engine = sqlalchemy.create_engine(
+    DATABASE_URL, 
+    connect_args={"check_same_thread": False},  # Necesario para SQLite + async
+    echo=True  # Activar logs de todas las consultas SQL
+)
 
 # Tabla de usuarios
 usuarios = sqlalchemy.Table(
