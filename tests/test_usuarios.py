@@ -51,6 +51,10 @@ def test_create_and_delete_usuario():
     response_check = client.get(f"/usuarios/{user_id}")
     assert response_check.status_code == 404  # Debería devolver 404 porque el usuario fue eliminado
 
+def test_provocar_error():
+    response = client.get("/provocar-error")
+    assert response.status_code == 500
+    assert response.json()["detail"] == "Este es un error de prueba controlado."
 
 
 @pytest.fixture(scope="module")

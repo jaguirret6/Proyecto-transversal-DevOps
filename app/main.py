@@ -63,6 +63,10 @@ async def db_status():
         return {"status": "Conexión exitosa con la base de datos"}
     except Exception as e:
         return {"status": "Error en la conexión", "detalle": str(e)}
+    
+@app.get("/provocar-error")
+def provocar_error():
+    raise HTTPException(status_code=500, detail="Este es un error de prueba controlado.")
 
 # ----------- ABM USUARIOS -----------
 
