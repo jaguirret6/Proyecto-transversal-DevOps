@@ -5,7 +5,6 @@ FROM python:3.12.10 AS dependencias
 WORKDIR /app
 
 COPY ./app ./app
-COPY ./tests ./tests
 COPY requirements.txt .
 
 # Instalar dependencias
