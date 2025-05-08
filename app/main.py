@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.database import database, usuarios
+from app.database import database, usuarios, event
 from contextlib import asynccontextmanager
+import logging
 
 # ----------- LIFESPAN -----------
 @asynccontextmanager
@@ -11,7 +12,6 @@ async def lifespan(app: FastAPI):
     await database.disconnect()
 
 app = FastAPI(title="Mi API", description="API con 10 endpoints y Swagger", lifespan=lifespan)
-
 # ----------- ENDPOINTS VARIOS -----------
 
 @app.get("/")
@@ -63,6 +63,10 @@ async def db_status():
         return {"status": "Conexión exitosa con la base de datos"}
     except Exception as e:
         return {"status": "Error en la conexión", "detalle": str(e)}
+    
+@app.get("/provocar-error")
+def provocar_error():
+    raise HTTPException(status_code=500, detail="Este es un error de prueba controlado.")
 
 # ----------- ABM USUARIOS -----------
 
