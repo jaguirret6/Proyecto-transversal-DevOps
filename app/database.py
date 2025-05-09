@@ -7,12 +7,7 @@ import logging
 
 
 
-
-
-
-
-
-# URL de conexión a SQLite (base en archivo local)
+# Conexión a SQLite (base local)
 DATABASE_URL = "sqlite:///./test.db"  # Archivo test.db en el mismo directorio
 
 # Objeto Database
