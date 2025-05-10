@@ -3,10 +3,10 @@
 
 name: Python application
 
-on:
-  push:
+on: #se define los eventos que disparan el workflow, puede ser mas de uno. En este caso push y pull request
+  push: ##evento que dispara el workflow##
     branches: [ "main" ]
-  pull_request:
+  pull_request: ##evento que dispara el workflow##
     branches: [ "main" ]
 
 permissions:

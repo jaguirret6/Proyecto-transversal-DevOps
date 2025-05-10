@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: jaguit6/api-devops-up
     container_name: fastapi-app-up
     ports:
       - "8000:8000"
