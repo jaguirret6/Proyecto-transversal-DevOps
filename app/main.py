@@ -11,7 +11,7 @@ async def lifespan(app: FastAPI):
     yield
     await database.disconnect()
 
-app = FastAPI(title="Mi API", description="API con 10 endpoints y Swagger", lifespan=lifespan)
+app = FastAPI(title="Mi API", description="API con endpoints, CRUD y Swagger", lifespan=lifespan)
 # ----------- ENDPOINTS VARIOS -----------
 
 @app.get("/")
