@@ -7,6 +7,7 @@ WORKDIR /app
 COPY ./app ./app
 COPY requirements.txt .
 
+
 # Instalar dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -17,9 +18,10 @@ WORKDIR /app
 COPY --from=dependencias /app/requirements.txt ./
 RUN pip install -r requirements.txt
 COPY --from=dependencias /app/ ./
+COPY newrelic.ini ./
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-
+ENV NEW_RELIC_CONFIG_FILE=/app/newrelic.ini
 
 
 
