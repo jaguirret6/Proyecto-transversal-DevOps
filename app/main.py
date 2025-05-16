@@ -1,17 +1,8 @@
-import newrelic.agent
-import os
-newrelic_ini = os.getenv("NEW_RELIC_CONFIG_FILE", "newrelic.ini")
-newrelic.agent.initialize(newrelic_ini)
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from app.database import database, usuarios, event
 from contextlib import asynccontextmanager
 import logging
-
-
-
-
 
 # ----------- LIFESPAN -----------
 @asynccontextmanager
