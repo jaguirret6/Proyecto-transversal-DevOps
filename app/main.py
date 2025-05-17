@@ -11,12 +11,12 @@ async def lifespan(app: FastAPI):
     yield
     await database.disconnect()
 
-app = FastAPI(title="Mi API", description="API con endpoints, CRUD y Swagger", lifespan=lifespan)
+app = FastAPI(title="Mi API", description="API con endpoints, CRUD. Deploy en render y monitoreo en new relic", lifespan=lifespan)
 # ----------- ENDPOINTS VARIOS -----------
 
 @app.get("/")
 def home():
-    return {"mensaje": "¡Bienvenido a la API!"}
+    return {"mensaje": "API DevOps - Juan Aguirre"}
 
 @app.get("/saludo/{nombre}")
 def saludo(nombre: str):
@@ -60,13 +60,13 @@ def minusculas(texto: str):
 async def db_status():
     try:
         await database.execute("SELECT 1")
-        return {"status": "Conexión exitosa con la base de datos"}
+        return {"status": "Conexión OK a la DB"}
     except Exception as e:
         return {"status": "Error en la conexión", "detalle": str(e)}
     
 @app.get("/provocar-error")
 def provocar_error():
-    raise HTTPException(status_code=500, detail="Este es un error de prueba controlado.")
+    raise HTTPException(status_code=500, detail="Error de prueba controlado.")
 
 # ----------- ABM USUARIOS -----------
 

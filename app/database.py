@@ -38,7 +38,6 @@ dbs_logger = logging.getLogger("databases")
 dbs_logger.setLevel(logging.DEBUG)
 dbs_logger.addHandler(file_handler)
 
-# … tu engine, metadata, tablas, etc …
 
 # Callback para capturar SQLAlchemy Core/ORM (opcional)
 def log_query(conn, cursor, statement, parameters, context, executemany):
