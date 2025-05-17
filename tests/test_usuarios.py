@@ -54,7 +54,7 @@ def test_create_and_delete_usuario():
 def test_provocar_error():
     response = client.get("/provocar-error")
     assert response.status_code == 500
-    assert response.json()["detail"] == "Este es un error de prueba controlado."
+    assert response.json()["detail"] == "Error de prueba controlado."
 
 
 @pytest.fixture(scope="module")
