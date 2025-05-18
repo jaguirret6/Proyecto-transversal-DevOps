@@ -15,6 +15,7 @@ FROM python:3.12.10-slim AS release
 WORKDIR /app
 
 COPY newrelic.ini .
+RUN pip install newrelic
 COPY --from=dependencias /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=dependencias /app/ ./
 
