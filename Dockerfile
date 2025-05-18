@@ -6,7 +6,6 @@ WORKDIR /app
 
 COPY ./app ./app
 COPY requirements.txt .
-
 # Instalar dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -15,8 +14,9 @@ FROM python:3.12.10-slim AS release
 WORKDIR /app
 
 COPY newrelic.ini .
-RUN pip install newrelic
+
 COPY --from=dependencias /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=dependencias /usr/local/bin /usr/local/bin
 COPY --from=dependencias /app/ ./
 
 EXPOSE 8000
