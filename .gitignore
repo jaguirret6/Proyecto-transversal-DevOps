@@ -6,3 +6,4 @@ requirements original.txt
 test.db
 app_logs.txt
 db_queries.log
+.env
