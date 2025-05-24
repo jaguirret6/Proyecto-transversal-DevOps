@@ -67,8 +67,6 @@ jobs:
 
       - name: Trigger redeploy on Render
         run: |
-         TAG=docker.io/jaguit6/staging-api-devops:1.4
-         TAG_CODIF=$(echo "$TAG" | jq -sRr @uri)
-         curl -X POST "${{ secrets.STAGING_RENDER_WEBHOOK }}&imgURL=${TAG_CODIF}"
+         curl -X POST "${{ secrets.STAGING_RENDER_WEBHOOK }}&imgURL=docker.io%2Fjaguit6%2Fstaging-api-devops%401.4"
          
       # TAG=docker.io/${{ secrets.DOCKER_USER }}/staging-api-devops:1.${{ github.run_number }}
