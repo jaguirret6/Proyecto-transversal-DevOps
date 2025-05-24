@@ -65,4 +65,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Trigger redeploy on Render
-        run: curl -X POST ${{ secrets.RENDER_WEBHOOK }}
+        run: |
+         TAG=docker.io/${{ secrets.DOCKER_USER }}/api-devops:1.${{ github.run_number }}
+         TAG_CODIF=$(echo "$TAG" | jq -sRr @uri)
+         curl -X POST "${{ secrets.RENDER_WEBHOOK }}&imgURL=${TAG_CODIF}"
