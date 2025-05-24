@@ -11,7 +11,7 @@ async def lifespan(app: FastAPI):
     yield
     await database.disconnect()
 
-app = FastAPI(title="Mi API", description="API con endpoints, CRUD. Deploy en render y monitoreo en new relic", lifespan=lifespan)
+app = FastAPI(title="API DevOps - Juan Aguirre", description="API con endpoints varios, CRUD de usuarios, deploy en Render y monitoreo en new relic", lifespan=lifespan)
 # ----------- ENDPOINTS VARIOS -----------
 
 @app.get("/")
