@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from app.main import app  # Aquí importas tu aplicación FastAPI
+from app.main import app
 from app.database import database
 
 
@@ -14,7 +14,7 @@ def test_create_usuario():
     )
     assert response.status_code == 200
     data = response.json()
-    assert "id" in data  # Verificar que el 'id' esté presente
+    assert "id" in data  
     assert data["nombre"] == "Juan"
     assert data["edad"] == 25
     assert data["color_favorito"] == "Azul"
@@ -22,7 +22,7 @@ def test_create_usuario():
 def test_get_usuarios():
     response = client.get("/usuarios")
     assert response.status_code == 200
-    assert isinstance(response.json(), list)  # Espera una lista de usuarios
+    assert isinstance(response.json(), list) 
 
 # Test para eliminar un usuario
 def test_create_and_delete_usuario():
@@ -31,8 +31,8 @@ def test_create_and_delete_usuario():
         "/usuarios",
         json={"nombre": "Juan", "edad": 25, "color_favorito": "Azul"}
     )
-    created_user = response_create.json()  # Obtiene el usuario creado
-    user_id = created_user["id"]  # Obtiene el ID del usuario creado
+    created_user = response_create.json()  
+    user_id = created_user["id"] 
 
     # 2. Verificar que el usuario fue creado correctamente
     assert response_create.status_code == 200
