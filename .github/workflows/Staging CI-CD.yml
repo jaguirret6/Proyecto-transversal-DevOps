@@ -65,8 +65,12 @@ jobs:
             ${{ secrets.DOCKER_USER }}/staging-api-devops:1.${{ github.run_number }}
             ${{ secrets.DOCKER_USER }}/staging-api-devops:latest
           labels: ${{ steps.meta.outputs.labels }}
-
-
+  
+  re_deploy_render:
+    runs-on: ubuntu-latest
+    name: Trigger redeploy on render
+    needs: push_to_docker_hub
+    steps:
       - name: Trigger redeploy on Render
         run: |
          curl -X POST "${{ secrets.STAGING_RENDER_WEBHOOK }}&imgURL=docker.io%2F${{ secrets.DOCKER_USER }}%2Fstaging-api-devops%3A1.${{ github.run_number }}"
