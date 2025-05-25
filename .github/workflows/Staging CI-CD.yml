@@ -63,7 +63,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USER }}/staging-api-devops:1.${{ github.run_number }}
-            ${{ secrets.DOCKER_USER }}//staging-api-devops:latest
+            ${{ secrets.DOCKER_USER }}/staging-api-devops:latest
           labels: ${{ steps.meta.outputs.labels }}
 
 
