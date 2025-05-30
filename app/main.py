@@ -14,6 +14,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="API DevOps - Juan Aguirre", description="API con endpoints varios, CRUD de usuarios, deploy en Render y monitoreo en new relic", lifespan=lifespan)
 # ----------- ENDPOINTS VARIOS -----------
 
+
 @app.get("/")
 def home():
     return {"mensaje": "API DevOps - Juan Aguirre"}
