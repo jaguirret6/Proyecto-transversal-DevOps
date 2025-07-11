@@ -5,7 +5,12 @@ name: Python application
 
 on: #se define los eventos que disparan el workflow, puede ser mas de uno. En este caso push y pull request
   push: ##evento que dispara el workflow##
-    branches: [ "main" ]
+    branches: 
+      - main
+      - staging
+  pull_request: ##evento que dispara el workflow##
+    branches: 
+      - main
 
 permissions:
   contents: read
@@ -36,8 +41,8 @@ jobs:
       run: |
         pytest
         
-  push_to_docker_hub:
-    name: Push Docker image to Docker Hub
+  push_to_docker_hub_main:
+    name: Push Docker image to Docker Hub (branch main)
     runs-on: ubuntu-latest
     needs: build_and_test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -66,12 +71,52 @@ jobs:
              ${{ secrets.DOCKER_USER }}/api-devops:latest
           labels: ${{ steps.meta.outputs.labels }}
 
-  re_deploy_render:
+  re_deploy_render_main:
     runs-on: ubuntu-latest
-    name: Trigger redeploy on render
-    needs: push_to_docker_hub
+    name: Trigger redeploy on render (produccion)
+    needs: push_to_docker_hub_main
     steps:
       - name: Trigger redeploy on Render
         run: |
          curl -X POST "${{ secrets.RENDER_WEBHOOK }}&imgURL=docker.io%2F${{ secrets.DOCKER_USER }}%2Fapi-devops%3A1.${{ github.run_number }}"
+        # POST con imagen versionada
+
+  push_to_docker_hub_staging:
+    name: Push Docker image to Docker Hub (branch staging)
+    runs-on: ubuntu-latest
+    needs: build_and_test
+    if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ github.repository }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USER }}/staging-api-devops:1.${{ github.run_number }}
+            ${{ secrets.DOCKER_USER }}/staging-api-devops:latest
+          labels: ${{ steps.meta.outputs.labels }}
+  
+  re_deploy_render_staging:
+    runs-on: ubuntu-latest
+    name: Trigger redeploy on render (staging)
+    needs: push_to_docker_hub_staging
+    steps:
+      - name: Trigger redeploy on Render
+        run: |
+         curl -X POST "${{ secrets.STAGING_RENDER_WEBHOOK }}&imgURL=docker.io%2F${{ secrets.DOCKER_USER }}%2Fstaging-api-devops%3A1.${{ github.run_number }}"
         # POST con imagen versionada
