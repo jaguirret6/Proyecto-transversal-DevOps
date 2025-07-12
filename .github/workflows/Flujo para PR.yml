@@ -10,11 +10,19 @@ permissions:
   contents: read
 
 jobs:
+  
   build_and_test:
     name: build_and_test_PR
     runs-on: ubuntu-latest
 
     steps:
+    - name: Check PR a main desde staging
+      if: github.base_ref == 'main'
+      run: |
+       if [ "${{ github.head_ref }}" != "staging" ]; then
+         echo "Solo se permiten PRs a main desde staging"
+         exit 1
+       fi
     - uses: actions/checkout@v4
     - name: Set up Python 3.12.10
       uses: actions/setup-python@v3
