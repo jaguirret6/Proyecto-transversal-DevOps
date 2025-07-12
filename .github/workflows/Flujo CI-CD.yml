@@ -8,10 +8,7 @@ on: #se define los eventos que disparan el workflow, puede ser mas de uno. En es
     branches: 
       - main
       - staging
-  pull_request: ##evento que dispara el workflow##
-    branches: 
-      - main
-
+      
 permissions:
   contents: read
 
