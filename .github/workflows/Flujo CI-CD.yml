@@ -20,13 +20,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check PR a main desde staging
-      if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
-      run: |
-       if [ "${{ github.ref }}" != "refs/heads/staging" ]; then
-         echo "Solo se permiten PRs a main desde staging"
-         exit 1
-       fi    
     - uses: actions/checkout@v4
     - name: Set up Python 3.12.10
       uses: actions/setup-python@v3
