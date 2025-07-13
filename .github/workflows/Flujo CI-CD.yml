@@ -21,9 +21,9 @@ jobs:
 
     steps:
     - name: Check PR a main desde staging
-      if: github.base_ref == 'main' && github.event_name == 'pull_request'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
       run: |
-       if [ "${{ github.head_ref }}" != "staging" ]; then
+       if [ "${{ github.ref }}" != "refs/heads/staging" ]; then
          echo "Solo se permiten PRs a main desde staging"
          exit 1
        fi    
